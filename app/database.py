@@ -12,6 +12,33 @@ ngo_profiles_collection = db["ngo_profiles"]
 donations_collection = db["donations"]
 notifications_collection = db["notifications"]
 
+async def create_indexes():
+    #Users
+    await users_collection.create_index("email", unique=True)
+    await users_collection.create_index("role")
+    await users_collection.create_index([("role",1), ("is_verified", 1)])
+    await users_collection.create_index("address.city")
+
+    #Donaions
+    await donations_collection.create_index("donor_id")
+    await donations_collection.create_index("donor_id")
+    await donations_collection.create_index("ngo_id")
+    await donations_collection.create_index("status")
+    await donations_collection.create_index([("donor_id", 1), ("status", 1)])
+    await donations_collection.create_index([("ngo_id", 1), ("status", 1)])
+    await donations_collection.create_index("created_at")
+ 
+    # Notifications
+    await notifications_collection.create_index("user_id")
+    await notifications_collection.create_index([("user_id", 1), ("is_read", 1)])
+    await notifications_collection.create_index("created_at")
+ 
+    # NGO Profiles
+    await ngo_profiles_collection.create_index("user_id", unique=True)
+    await ngo_profiles_collection.create_index("verification_status")
+
+    print("MongoDB indexes created successfully.")
+
 
 async def ping_database() -> bool:
     """Quick connectivity check — call this on startup to fail fast if Mongo is unreachable."""
