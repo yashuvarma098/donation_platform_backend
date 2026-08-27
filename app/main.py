@@ -105,7 +105,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://donation-platform-frontend-3lnolf14t-yashashree.vercel.app/",  # production
+        "https://donation-platform-frontend-umber.vercel.app",  # production
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
